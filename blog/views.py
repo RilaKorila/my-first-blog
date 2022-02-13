@@ -24,7 +24,7 @@ def post_new(request):
             # 'commit=False' : we do not save Post model yet (before doing that, we have to save author name)
             post = form.save(commit=False)
             post.author = request.user
-            post.published_date = timezone.now()
+            # post.published_date = timezone.now()
             post.save()
             
             # 'post_detail' is the name of the view we want to go to
@@ -53,3 +53,17 @@ def post_edit(request, pk):
         form = PostForm(instance=post)
     
     return render(request, 'blog/post_edit.html', {'form': form})
+
+def draft_list(request):
+    drafts = Post.objects.filter(published_date__isnull=True).order_by('created_date')
+    return render(request, 'blog/draft_list.html', {'drafts':drafts})
+
+def post_publish(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    post.publish()
+    return redirect('post_detail', pk=pk)
+
+def post_remove(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    post.delete()
+    return redirect('post_list')
