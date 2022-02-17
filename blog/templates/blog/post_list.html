@@ -4,11 +4,11 @@
     {% for post in posts %}
     <div class="post">
         <h2><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h2>
-        <p>{{ post.text|linebreaksbr }}</p>
+        <p>{{ post.text|linebreaksbr|truncatewords:20 }}</p>
         <div class="date">
             <p>published: {{ post.published_date }}</p>
         </div>
-        <a href="{% url 'post_detail' pk=post.pk%}">Comment: {{ post.comments.count }}</a>
+        <a href="{% url 'post_detail' pk=post.pk%}"><i class="bi bi-chat-dots"></i> {{ post.approved_comments.count }}</a>
     </div>
     {% endfor %}
 {% endblock %}

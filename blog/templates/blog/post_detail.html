@@ -42,12 +42,12 @@
             <div class="comment">
                 <div class="date">{{ comment.created_date }}</div>
                 <strong>{{ comment.author }}</strong>
-                <p>{{ comment.text|linebreaksbr }}</p>
+                <p>{{ comment.text|linebreaksbr|truncatewords:10 }}</p>
             </div>
         {% endif %}
     {% empty %}
         <p>No Comments here yet :(</p>
-        <a class="btn btn-secondary" href="{% url 'add_comment_to_post' pk=post.pk %}" role="button">Add Comment</a>
     {% endfor %}
+    <a class="btn btn-secondary" href="{% url 'add_comment_to_post' pk=post.pk %}" role="button">Add Comment</a>
 
 {% endblock %}
