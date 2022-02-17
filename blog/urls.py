@@ -9,7 +9,11 @@ urlpatterns = [
     path('post/<int:pk>/edit/', views.post_edit, name='post_edit'),
     path('drafts/', views.draft_list, name='draft_list'),
     path('post/<int:pk>/publish/', views.post_publish, name='post_publish'),
-    path('post/<int:pk>/remove/', views.post_remove, name='post_remove'),
+    path('post/<pk>/remove/', views.post_remove, name='post_remove'),
+    path('post/<int:pk>/comment/', views.add_comment_to_post, name='add_comment_to_post'),
+    path('comments/', views.comment_list, name='comment_list'),
+    path('comments/<int:pk>/approve/', views.approve_comment, name='approve_comment'),
+    
     ]
 # <int:pk>: Django expects an int value and 
 # will transfer it to a view as a variable called pk(Primary Key)

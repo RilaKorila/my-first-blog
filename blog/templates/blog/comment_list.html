@@ -1,0 +1,15 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+<div class="comment">
+    <h2>Not Approved Comments</h2>
+    
+    {% for comment in comments %}
+        <div class="comment-item">   
+            <strong>{{ comment.author }}</strong>
+            <p>{{ comment.text }}</p>
+            <a class="btn btn-danger" href="{% url 'approve_comment' pk=comment.pk %}" >Approve</a>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

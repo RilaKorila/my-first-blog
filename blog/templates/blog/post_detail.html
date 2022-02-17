@@ -29,9 +29,25 @@
                     <div class="modal-body">Do you really delete the post?</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" data-bs-dismiss="modal" role="button" >Cancel</button>
-                    <button class="btn btn-danger" href="{% url 'post_remove' pk=post.pk %}" role="button">Delete</button>
+                    <a class="btn btn-danger" href="{% url 'post_remove' pk=post.pk %}" role="button">Delete</a>
                 </div>
             </div>
         </div>
     </div>
+
+    <hr>
+    <h2>Comments</h2>
+    {% for comment in post.comments.all %}
+        {% if comment.approved_comment %}
+            <div class="comment">
+                <div class="date">{{ comment.created_date }}</div>
+                <strong>{{ comment.author }}</strong>
+                <p>{{ comment.text|linebreaksbr }}</p>
+            </div>
+        {% endif %}
+    {% empty %}
+        <p>No Comments here yet :(</p>
+        <a class="btn btn-secondary" href="{% url 'add_comment_to_post' pk=post.pk %}" role="button">Add Comment</a>
+    {% endfor %}
+
 {% endblock %}

@@ -1,5 +1,3 @@
-from statistics import mode
-from turtle import title
 from django.conf import settings
 from django.db import models
 from django.utils import timezone
@@ -27,3 +25,18 @@ class Post(models.Model): # Object
     
     def __str__(self):
         return self.title
+
+class Comment(models.Model):
+    # related_name: models.ForeignKey allows us to have access to comments from within Post model
+    post = models.ForeignKey('blog.Post', on_delete=models.CASCADE, related_name='comments')
+    author = models.CharField(max_length=20)
+    text = models.TextField()
+    comment_date = models.DateTimeField(default=timezone.now)
+    approved_comment = models.BooleanField(default=False)
+    
+    def approve(self):
+        self.approved_comment = True
+        self.save()
+    
+    def __str__(self):
+        return self.text
